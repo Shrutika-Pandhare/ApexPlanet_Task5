@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wishlist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+      
+    }
+
+    body{
+      background-color: #f8f1e5;;
+    }
+
+    h1 {
+      text-align: center;
+      color: #5c4033;
+      margin-bottom: 60px;
+      margin-top: 60px;
+    }
+
+    .wishlist-container {
+      max-width: 800px;
+      margin: 0 auto;
+  
+    }
+
+    .wishlist-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #eec7a1;
+      border-radius: 15px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .wishlist-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .wishlist-left img {
+      width: 130px;
+      height: 100px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .wishlist-left span {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .wishlist-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .wishlist-buttons button,
+    .clear-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: #b08968;
+      color: white;
+      transition: background 0.3s ease;
+    }
+
+    .wishlist-buttons button:hover,
+    .clear-btn:hover {
+      background-color: #8b5e3c;
+    }
+
+    .clear-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .wishlist-empty {
+      text-align: center;
+      font-size: 18px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h1>Wishlist</h1>
+  <div class="wishlist-container" id="wishlistContainer"></div>
+
+  <div class="clear-container">
+    <button class="clear-btn" onclick="clearWishlist()">Clear Wishlist</button>
+  </div>
+
+  <script>
+    const wishlistData = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const wishlistContainer = document.getElementById('wishlistContainer');
+
+    function renderWishlist() {
+      wishlistContainer.innerHTML = "";
+
+      if (wishlistData.length === 0) {
+        wishlistContainer.innerHTML = "<p class='wishlist-empty'>Your wishlist is empty ☕</p>";
+        return;
+      }
+
+      wishlistData.forEach((item, index) => {
+        const itemBox = document.createElement('div');
+        itemBox.className = 'wishlist-item';
+        itemBox.innerHTML = `
+          <div class="wishlist-left">
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name} – ₹${item.price}</span>
+          </div>
+          <div class="wishlist-buttons">
+            <button onclick="moveToCart('${item.name}', ${item.price}, '${item.image}')">Add to Cart</button>
+            <button onclick="removeWishlistItem(${index})">Remove</button>
+          </div>
+        `;
+        wishlistContainer.appendChild(itemBox);
+      });
+    }
+
+    function moveToCart(name, price, image) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ name, price, image, quantity: 1 });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${name} added to your cart!`);
+    }
+
+    function removeWishlistItem(index) {
+      wishlistData.splice(index, 1);
+      localStorage.setItem('wishlist', JSON.stringify(wishlistData));
+      renderWishlist();
+    }
+
+    function clearWishlist() {
+      localStorage.removeItem('wishlist');
+      wishlistData.length = 0;
+      renderWishlist();
+    }
+
+    renderWishlist();
+  </script>
+</body>
+</html>

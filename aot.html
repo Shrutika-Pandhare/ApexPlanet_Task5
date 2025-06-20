@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aot Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body{
+        background-color: #f8f1e5;
+    }
+
+    .flash-sale-bar {
+      background-color: #b08968;
+      color: white;
+      text-align: center;
+      padding: 30px 0;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .countdown {
+      display: inline-block;
+      background-color: #2f3542;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin: 0 5px;
+      min-width: 30px;
+    }
+    
+    .promo-code {
+      color: #ffeaa7;
+      font-weight: bold;
+    }
+
+.theme-banner img {
+  width: 80%;
+  height: auto;
+  object-fit: cover;
+  max-height: 600px;
+  border-radius: 10px;
+  display: block; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+
+@media (max-width: 1200px) {
+  .theme-banner img {
+    width: 85%;
+    right: -120px;
+  }
+}
+
+@media (max-width: 576px) { /* Mobile */
+  .theme-banner img {
+    width: 100%;
+    right: 0;
+    max-height: 300px;
+    margin-top: 20px;
+    border-radius: 0;
+  }
+}
+
+.theme-controls {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    padding: 25px 20px; /* Increased padding */
+    background-color: #f8f1e9;
+    margin: 20px 0;
+    border-radius: 12px;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: none;
+  background-color: #b08968;
+  color: white;
+  border-radius: 20px;
+  font-family: 'Quicksand';
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-btn.active {
+  background-color: #6d4c41;
+}
+
+.sort-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 50px 0;
+    /* background-color: #f9f5f0;  */
+  }
+  
+  .sort-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .sort-center label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 39px;
+    font-weight: 700;
+    color: #6d4c41; /* Earthy brown */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .sort-select {
+    padding: 15px 25px;
+    font-size: 20px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    color: #6d4c41;
+    background-color: white;
+    border: 2px solid #b08968;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    min-width: 250px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .sort-select:hover {
+    border-color: #6d4c41;
+    transform: translateY(-2px);
+  }
+  
+  .sort-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.3);
+  }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 20px 40px 60px;
+}
+
+.product-card {
+  background-color:rgb(148, 130, 110);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  font-family: 'Quicksand';
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+}
+
+.product-card img:hover {
+  transform: scale(1.09);
+}
+
+.product-card p {
+  margin: 10px 0 6px;
+  font-size: 25px;
+  color: white;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.product-actions button {
+  /* background-color: #b08968; */
+  /* color: white; */
+  border: none;
+  border-radius: 20px;
+  padding: 6px 20px;
+  font-size: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.product-actions button:hover {
+  background-color: #b08968;
+}
+
+/* ✅ Responsive: 2 items on tablets, 1 item on phones */
+@media (max-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="flash-sale-bar">
+FLASH SALE: 10% OFF  • Ends in 
+<span class="countdown" id="hours">20</span>h 
+<span class="countdown" id="minutes">58</span>m 
+<span class="countdown" id="seconds">40</span>s • 
+Code: <span class="promo-code">XOXO</span>
+</div>
+
+<!-------- BANNER -------------->
+<section class="theme-banner">
+  <img src="images/banner44.png" alt="Studio Ghibli Banner" />
+</section>
+
+  <div class="sort-container">
+  <div class="sort-center">
+    <label for="sort">SORT BY</label>
+    <select id="sort" class="sort-select">
+      <option value="default">FEATURED</option>
+      <option value="best">BEST SELLING</option>
+      <option value="az">A-Z</option>
+      <option value="za">Z-A</option>
+      <option value="lowhigh">PRICE (LOW TO HIGH)</option>
+      <option value="highlow">PRICE (HIGH TO LOW)</option>
+    </select>
+  </div>
+</div>
+
+<!-------PRODUCT---------->
+<div class="product-grid">
+  <div class="product-card" data-price="500" data-name="Aot Notebook" data-rating="4.5">
+    <img src="aot/notebook.jpg" alt="book1" loading="lazy">
+    <p>Aot Notebooks</p>
+    <p>₹ 500</p>
+    <div class="product-actions">
+      <button onclick="addToCart('Aot Notebooks')">🛒</button>
+      <button onclick="addToWishlist('Aot Notebooks')">♡</button>
+    </div>
+  </div>
+
+  <div class="product-card" data-price="350" data-name="pen" data-rating="4.0">
+    <img src="aot/pens.jpg" alt="bookmark" loading="lazy">
+    <p>Gel Pens</p>
+    <p>₹ 350</p>
+    <div class="product-actions">
+      <button onclick="addToCart('Gel Pens')">🛒</button>
+      <button onclick="addToWishlist('Gel Pens')">♡</button>
+    </div>
+  </div>
+
+  <div class="product-card" data-price="600" data-name="Colossal Titan Mug" data-rating="4.8">
+    <img src="aot/cup.jpg" alt="cup" loading="lazy">
+    <p>Colossal Titan Mug</p>
+    <p>₹ 600</p>
+    <div class="product-actions">
+      <button onclick="addToCart('Colossal Titan Mug')">🛒</button>
+      <button onclick="addToWishlist('Colossal Titan Mug')">♡</button>
+    </div>
+  </div>
+
+  <div class="product-card" data-price="400" data-name="keychain" data-rating="4.0">
+    <img src="aot/keychain.jpg" alt="key" loading="lazy">
+    <p>Aot Keychains</p>
+    <p>₹ 400</p>
+    <div class="product-actions">
+      <button onclick="addToCart('Aot Keychains')">🛒</button>
+      <button onclick="addToWishlist('Aot Keychains')">♡</button>
+    </div>
+  </div>
+
+  <div class="product-card"  data-price="500" data-name="poster" data-rating="3.9">
+    <img src="aot/poster.jpg" alt="poster" loading="lazy">
+    <p>Levi Poster</p>
+    <p>₹ 500</p>
+    <div class="product-actions">
+      <button onclick="addToCart('Levi Poster')">🛒</button>
+      <button onclick="addToWishlist('Levi Poster')">♡</button>
+    </div>
+  </div>
+
+  <div class="product-card" data-price="600" data-name="pouch" data-rating="4.8">
+    <img src="aot/pouch.jpg" alt="pouch" loading="lazy">
+    <p>Levi Makeup Pouch</p>
+    <p>₹ 600</p>
+    <div class="product-actions">
+      <button onclick="addToCart('Levi Makeup Pouch')">🛒</button>
+      <button onclick="addToWishlist('Levi Makeup Pouch')">♡</button>
+    </div>
+  </div>
+
+  <div class="product-card" data-price="800" data-name="Grishas Syringe Pen" data-rating="4.6">
+    <img src="aot/pens1.jpg" alt="pens" loading="lazy">
+    <p>Grishas Syringe Pen</p>
+    <p>₹ 800</p>
+    <div class="product-actions">
+      <button onclick="addToCart('Grishas Syringe Pen')">🛒</button>
+      <button onclick="addToWishlist('Grishas Syringe Pen')">♡</button>
+    </div>
+  </div>
+
+
+  <div class="product-card" data-price="399" data-name="stickynotes" data-rating="3.5">
+    <img src="aot/stickers.jpg" alt="notes" loading="lazy">
+    <p>AoT Stickers</p>
+    <p>₹ 399</p>
+    <div class="product-actions">
+      <button onclick="addToCart('AoT Stickers')">🛒</button>
+      <button onclick="addToWishlist('AoT Stickers')">♡</button>
+    </div>
+  </div>
+
+
+</section>
+
+<script src="theme.js"></script>
+
+
+</body>
+</html>

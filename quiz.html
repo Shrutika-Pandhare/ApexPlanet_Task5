@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Which Theme Should You Shop From?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #fef6f0;
+      color: #333;
+      padding: 20px;
+      transition: background-color 0.5s ease;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #6d4c41;
+      position: relative;
+      top: 50px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 20px;
+      background: #f0e0d0;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 20px;
+      position: relative;
+      top: 50px;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #d4a373;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .quiz-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background-color 0.5s ease;
+      position: relative;
+      top: 80px;
+    }
+
+    .question {
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .question h2 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #4e342e;
+      text-align: center;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 12px;
+      background: #f7e3d0;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .options button:hover {
+      background: #eec7a1;
+      transform: translateY(-2px);
+    }
+
+    .result {
+      text-align: center;
+      font-size: 27px;
+      margin-top: 80px;
+      padding: 20px;
+      /* background: #fff3e0; */
+      border-radius: 12px;
+      display: none;
+    }
+
+    .result img {
+      width: 700%;
+      height: 700%;
+      max-width: 750px;
+      border-radius: 12px;
+      margin-top: 40px;
+      cursor: pointer;
+      position: relative;
+      right: -5px;
+    }
+
+    .restart-btn {
+      margin-top: 25px;
+      padding: 12px 30px;
+      font-size: 20px;
+      border: none;
+      background-color: #b08968;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      text-align: center;
+      
+    }
+
+    .restart-btn:hover {
+      background-color: #6d4c41;
+    }
+
+    /* Responsive Design */
+@media (max-width: 1024px) {
+  .quiz-container,
+  .progress-bar {
+    max-width: 90%;
+    padding: 25px;
+  }
+
+  .question h2 {
+    font-size: 22px;
+  }
+
+  .options button {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .result img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .restart-btn {
+    font-size: 18px;
+    padding: 10px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+    top: 30px;
+  }
+
+  .quiz-container {
+    padding: 20px;
+    top: 60px;
+  }
+
+  .question h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .options button {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .progress-bar {
+    height: 14px;
+    top: 30px;
+  }
+
+  .result {
+    font-size: 22px;
+    margin-top: 60px;
+    padding: 16px;
+  }
+
+  .restart-btn {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <h1>Which Theme Should You Shop From?</h1>
+  <div class="progress-bar"><div class="progress" id="progress"></div></div>
+  <div class="quiz-container" id="quiz"></div>
+  <div class="result" id="resultBox"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const questions = [
+      {
+        text: "What type of stationery excites you the most?",
+        options: ["Sticky notes & plush pens", "Journals & wax seals", "Sketchbooks & bold pens", "Simple planners & cute doodles"],
+        map: ["kuromi", "ghibli", "aot", "snoopy"]
+      },
+      {
+        text: "Pick your ideal desk aesthetic:",
+        options: ["All-pink chaos with plushies", "Cozy vintage with fairy lights", "Dark, sleek, anime posters", "Clean, happy, comic-style"],
+        map: ["kuromi", "ghibli", "aot", "snoopy"]
+      },
+      {
+        text: "Which kind of stickers would you use the most?",
+        options: ["Sassy hearts & skulls", "Nature & soot sprites", "Swords & anime faces", "Speech bubbles & Snoopy"],
+        map: ["kuromi", "ghibli", "aot", "snoopy"]
+      },
+      {
+        text: "Choose a color palette:",
+        options: ["Pink + black", "Cream, olive, brown", "Red, grey, black", "Blue, white, yellow"],
+        map: ["kuromi", "ghibli", "aot", "snoopy"]
+      },
+      {
+        text: "Pick a doodle style you'd draw in class:",
+        options: ["Angry bunny or cute chaos", "Soft forest spirits", "Levi with swords", "Dancing beagle"],
+        map: ["kuromi", "ghibli", "aot", "snoopy"]
+      },
+      {
+        text: "What's your overall vibe?",
+        options: ["Bold & chaotic cute", "Cozy & dreamy", "Fierce & serious", "Chill & classic"],
+        map: ["kuromi", "ghibli", "aot", "snoopy"]
+      }
+    ];
+
+    let currentQuestion = 0;
+    const themeScores = { ghibli: 0, kuromi: 0, aot: 0, snoopy: 0 };
+    const quizContainer = document.getElementById("quiz");
+    const resultBox = document.getElementById("resultBox");
+    const progressBar = document.getElementById("progress");
+
+    function setBackground(theme) {
+      const colors = {
+        ghibli: '#e5f4ea',
+        kuromi: '#ffe0f0',
+        aot: '#eaeaea',
+        snoopy: '#e6f4ff'
+      };
+      document.body.style.backgroundColor = colors[theme] || '#fef6f0';
+    }
+
+    function showQuestion(index) {
+  const questionColors = [
+    '#fff0f5', // light pink
+    '#f0f8ff', // alice blue
+    '#fefbd8', // pastel yellow
+    '#e0f7fa', // light cyan
+    '#f3e5f5', // lavender
+    '#e6ffe9'  // minty green
+  ];
+  document.body.style.backgroundColor = questionColors[index % questionColors.length];
+
+  quizContainer.innerHTML = '';
+  const q = questions[index];
+  const questionDiv = document.createElement('div');
+  questionDiv.classList.add('question');
+  questionDiv.innerHTML = `<h2>Q${index + 1}. ${q.text}</h2>`;
+
+  const optionsDiv = document.createElement('div');
+  optionsDiv.classList.add('options');
+
+  q.options.forEach((optionText, i) => {
+    const btn = document.createElement('button');
+    btn.innerText = optionText;
+    btn.addEventListener('click', () => {
+      const theme = q.map[i];
+      themeScores[theme]++;
+      currentQuestion++;
+      updateProgress();
+      if (currentQuestion < questions.length) {
+        showQuestion(currentQuestion);
+      } else {
+        showResult();
+      }
+    });
+    optionsDiv.appendChild(btn);
+  });
+
+  questionDiv.appendChild(optionsDiv);
+  quizContainer.appendChild(questionDiv);
+}
+
+
+    function updateProgress() {
+      const percent = ((currentQuestion) / questions.length) * 100;
+      progressBar.style.width = percent + "%";
+    }
+
+    function showResult() {
+      const topTheme = Object.keys(themeScores).reduce((a, b) => themeScores[a] > themeScores[b] ? a : b);
+      const bannerMap = {
+        ghibli: { img: "images/banner3.png", link: "ghibli.html" },
+        kuromi: { img: "images/banner5.png", link: "kuromi.html" },
+        aot: { img: "images/banner44.png", link: "aot.html" },
+        snoopy: { img: "images/banner2.png", link: "snoopy.html" }
+      };
+
+      const textMap = {
+        ghibli: "You're a Ghibli dreamer ✨ Calm, cozy & magical. Shop our Ghibli collection!",
+        kuromi: "You're totally Kuromi 💗 Bold, cute & a little chaotic. Shop Kuromi goodies!",
+        aot: "You’re fierce like AOT 🔥 Driven, intense & cool. Attack the cart now!",
+        snoopy: "You're a Snoopy soul 🐶 Wholesome, sweet & classic. Time to explore Snoopy!"
+      };
+
+      setBackground(topTheme);
+      quizContainer.style.display = "none";
+      progressBar.style.width = "100%";
+     resultBox.innerHTML = `
+  <p>${textMap[topTheme]}</p>
+  <div class="resultImageBox">
+    <a href="${bannerMap[topTheme].link}">
+      <img src="${bannerMap[topTheme].img}" alt="${topTheme} banner">
+    </a>
+  </div>
+  <div class="restartContainer">
+    <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
+  </div>
+`;
+
+      resultBox.style.display = "block";
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      for (let key in themeScores) themeScores[key] = 0;
+      resultBox.style.display = "none";
+      quizContainer.style.display = "block";
+      setBackground('');
+      updateProgress();
+      showQuestion(currentQuestion);
+    }
+
+    showQuestion(currentQuestion);
+    updateProgress();
+  </script>
+</body>
+</html>
