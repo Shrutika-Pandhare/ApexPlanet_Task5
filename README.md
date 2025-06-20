@@ -6,10 +6,14 @@ An e-commerce website built with HTML, CSS, and JavaScript. It features themed s
 
 # Features
 
-1.Themed product pages
-2.Shopping cart with two-step checkout
-3.Wishlist functionality
-4.Lazy loading for optimized image performance
-5.Cross-browser compatibility (Chrome, Microsoft Edge, Safari
+Themed product pages
+
+Shopping cart with two-step checkout
+
+Wishlist functionality
+
+Lazy loading for optimized image performance
+
+Cross-browser compatibility (Chrome, Microsoft Edge, Safari)
 
 
